@@ -1,6 +1,8 @@
 package com.linkedincourse.tddtesting;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
@@ -20,8 +22,15 @@ public class CalculatorTest {
 		Calculator calculator = new Calculator();
 		//Double result = calculator.divide(10.0,0.0);
 
-		assertThrows(new ArithmeticException().getClass() , () -> calculator.divide(10.0, 0.0));
+		assertThrows(ArithmeticException.class , () -> calculator.divide(10.0, 0.0));
 		
+	}
+	@Test
+	void testDivideNegativeNumbers() {
+		Calculator calculator = new Calculator();
+		Double result = calculator.divide(-20.0, -5.0);
+		
+		assertEquals(4, result);
 	}
 }
  
