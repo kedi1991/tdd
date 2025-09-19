@@ -59,5 +59,18 @@ public class TaskRepositoryTest {
 		assertFalse(retrivedTask.isEmpty());
 	}
 	
+	@Test
+	void testUpdateTask() {
+		//init
+		Task task = new Task(null,"Cooper", "Unemployed");
+		taskRepository.save(task);
+		
+		//logic
+		task.setStatus("Dealer");
+		taskRepository.save(task);
+		//assert
+		assertEquals("Dealer", taskRepository.findById(task.getId()).get().getStatus());
+		
+	}
 	
 }
