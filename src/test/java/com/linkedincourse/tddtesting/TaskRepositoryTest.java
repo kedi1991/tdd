@@ -6,6 +6,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 @DataJpaTest
 public class TaskRepositoryTest {
 
@@ -26,5 +28,36 @@ public class TaskRepositoryTest {
 		assertNotNull(savedTask);
 		assertEquals("Task 1", savedTask.getTitle());
 	}
+	
+	@Test
+	void testDeletedTask() {
+		//init
+		Task task = new Task();
+		task.setTitle("Gilbert");
+		task.setStatus("Employed");
+		
+		Task savedTask = taskRepository.save(task);
+		
+		//logic
+		taskRepository.delete(task);
+		
+		Optional<Task> deletedTask = taskRepository.findById(savedTask.getId()); 
+		assertFalse(deletedTask.isPresent());
+	}
+	@Test
+	void testGetTask() {
+		//init
+		Task task = new Task();
+		task.setTitle("Cooper");
+		task.setStatus("Dealer");
+		
+		taskRepository.save(task);
+		//logic
+		
+		Optional<Task> retrivedTask = taskRepository.findById(task.getId());
+		//assert
+		assertFalse(retrivedTask.isEmpty());
+	}
+	
 	
 }
